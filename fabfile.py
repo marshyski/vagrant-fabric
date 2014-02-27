@@ -31,13 +31,13 @@ def install_base():
     yum_install('dos2unix glances screen gcc make python-devel python-setuptools python-pip python-boto euca2ools')
 
 def install_python():
-    sudo('curl -O http://python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz')
-    sudo('tar xfv Python-*')
+    run('curl -O http://python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz')
+    run('tar xfv Python-*')
     with cd('Python-*'):
         sudo('./configure --prefix=/usr/local --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib"')
         sudo('make && make altinstall')
 
 def clean_up():
     yum_remove('gcc make')
-    sudo(rm -f /var/lib/rpm/__db*; rpm --rebuilddb; yum history new; yum clean all)
-    sudo(rm -rf Python-*)
+    sudo('rm -f /var/lib/rpm/__db*; rpm --rebuilddb; yum history new; yum clean all')
+    run('rm -rf Python-*')
