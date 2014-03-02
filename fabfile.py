@@ -1,6 +1,7 @@
 #This fabric script must be used with `RHEL/CentOS/Fedora` systems
 
-from fabric.api import *
+#from fabric.api import *
+from fabric.api import sudo, run, env
 
 # Sometimes localhost can't be resolved, using ip instead.
 env.hosts = ['127.0.0.1']
@@ -25,7 +26,7 @@ def yum_install(*packages):
     sudo('yum install --nogpgcheck --skip-broken -y %s' % ' '.join(packages), shell=False)
 
 def yum_remove(*packages):
-    sudo('yum remove -y %s' % ' '.join(packages), shell=False)
+    sudo('yum remove -y --skip-broken %s' % ' '.join(packages), shell=False)
 
 def install_base():
     yum_install('dos2unix glances screen gcc make python-devel python-setuptools python-pip python-boto euca2ools')
@@ -38,6 +39,7 @@ def install_python():
         sudo('make && make altinstall')
 
 def clean_up():
-    yum_remove('gcc make')
-    sudo('rm -f /var/lib/rpm/__db*; rpm --rebuilddb; yum history new; yum clean all')
+    yum_remove('gcc')
+    sudo('rm -f /var/lib/rpm/__db*; rpm --rebuilddb')
+    sudo('yum history new; yum clean all')
     run('rm -rf Python-*')
