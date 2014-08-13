@@ -36,6 +36,12 @@ def yum_remove(*packages):
 def install_base():
     yum_install('dos2unix glances screen gcc make python-devel python-setuptools python-pip git rubygems rpmbuild ruby-devel')
 
+#Install Docker LXC Engine
+def install_docker():
+    yum_install('docker-io')
+    sudo('/sbin/chkconfig docker on')
+    sudo('/sbin/service docker start')
+
 #Install Python pip packages
 def pip_install(*pip):
     sudo('pip install %s' % ' '.join(pip), shell=False)

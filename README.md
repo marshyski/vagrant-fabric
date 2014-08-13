@@ -33,6 +33,7 @@ List of current Vagrant boxes here:  https://vagrantcloud.com/discover
     gem_install
     gem_update
     install_base
+    install_docker
     install_epel
     install_python
     pip_install
