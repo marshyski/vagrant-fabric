@@ -1,7 +1,7 @@
 vagrant-fabric
 ==============
 
-RHEL [Python Fabric][1] script to setup AWS tools and other dependencies
+RHEL/CentOS/Fedora [Python Fabric][1] script to setup Vagrant box
 
 Requirements
 ------------
@@ -12,7 +12,7 @@ Requirements
   * Python pip
   * Python fabric
   
-List of current Vagrant Boxes here:  https://vagrantcloud.com/discover
+List of current Vagrant boxes here:  https://vagrantcloud.com/discover
 
 **Getting started with [Vagrant][2] CentOS 6.5 box:**
 
