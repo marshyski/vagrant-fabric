@@ -13,14 +13,8 @@ def provision_box():
     update_system()
     install_epel()
     install_base()
-    install_awscli()
-    install_python()
+    install_python27()
     clean_up()
-
-#Run this when you have the need to update the system
-def upgrade_box():
-    update_system()
-    upgrade_awscli()
 
 #Update system via yum
 def update_system():
@@ -28,7 +22,7 @@ def update_system():
 
 #Install EPEL repo file
 def install_epel():
-    sudo('rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm')
+    sudo('yum install --nogpgcheck -y http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm')
 
 #Install packages defined below
 def yum_install(*packages):
@@ -40,21 +34,29 @@ def yum_remove(*packages):
 
 #Install dependencies on system via yum 
 def install_base():
-    yum_install('dos2unix glances screen gcc make python-devel python-setuptools python-pip python-boto euca2ools git')
+    yum_install('dos2unix glances screen gcc make python-devel python-setuptools python-pip git rubygems rpmbuild ruby-devel')
 
-#Install AWS command-line tools (Python/boto)
-def install_awscli():
-    sudo('pip install awscli')
+#Install Python pip packages
+def pip_install(*pip):
+    sudo('pip install %s' % ' '.join(pip), shell=False)
 
-#Upgrade pip install of awscli tools
-def upgrade_awscli():
-    sudo('pip install --upgrade awscli')
+#Upgrade Python pip packages
+def pip_upgrade(*pip):
+    sudo('pip install --upgrade %s' % ' '.join(pip), shell=False)
 
-#Install Python 2.7.*
+#Install Ruby gems
+def gem_install(*gem):
+    sudo('gem install %s' % ' '.join(gem), shell=False)
+
+#Update Ruby gem
+def gem_update(*gem):
+    sudo('gem update %s' % ' '.join(gem), shell=False)
+
+#Install Python 2.7.8
 def install_python():
-    run('curl -Os http://legacy.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz')
-    run('tar xfv Python-2.7.6.tar.xz')
-    with cd ('Python-2.7.6'):
+    run('curl -O https://www.python.org/ftp/python/2.7.8/Python-2.7.8.tar.xz')
+    run('tar xfv Python-2.7.8.tar.xz')
+    with cd ('Python-2.7.8'):
         sudo('./configure --prefix=/usr/local --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib"')
         sudo('make && make altinstall')
 
