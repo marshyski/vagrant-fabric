@@ -28,6 +28,8 @@ List of current Vagrant boxes here:  https://vagrantcloud.com/discover
 **Getting started with [vagrant-fabric][3]:**
 
     curl -Osf https://raw.github.com/marshyski/vagrant-fabric/master/fabfile.py
+    pip install Fabric
+
     fab -l #Output:
     clean_up
     gem_install
